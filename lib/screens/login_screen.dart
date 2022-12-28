@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/components/button_1.dart';
+import 'package:flutter_chat_app/constants.dart';
+import 'package:flutter_chat_app/screens/chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = "/login";
@@ -10,6 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  String email = " ";
+  String password = " ";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,61 +40,45 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
                 //Do something with the user input.
+                email = value;
               },
-              decoration: inputDecoration("Enter your Email."),
+              decoration:
+                  kInputDecoration.copyWith(hintText: "Enter your Email."),
             ),
             const SizedBox(
               height: 8.0,
             ),
             TextField(
-                onChanged: (value) {
-                  //Do something with the user input.
-                },
-                decoration: inputDecoration("Enter your password.")),
+              obscureText: true,
+              onChanged: (value) {
+                //Do something with the user input.
+                password = value;
+              },
+              decoration:
+                  kInputDecoration.copyWith(hintText: "Enter your password"),
+            ),
             SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement login functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                  ),
-                ),
-              ),
+            Buttons_1(
+              color: Colors.lightBlueAccent,
+              onclick: () async {
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+
+                  Navigator.pushNamed(context, ChatScreen.id);
+                } catch (e) {
+                  print(e);
+                }
+              },
+              text: "Log in",
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  InputDecoration inputDecoration(String Htext) {
-    return InputDecoration(
-      hintText: Htext,
-      contentPadding:
-          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
       ),
     );
   }

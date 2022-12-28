@@ -1,7 +1,5 @@
 // ignore_for_file: camel_case_types
 
-import 'dart:ffi';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/screens/login_screen.dart';
@@ -82,14 +80,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               height: 48.0,
             ),
             Buttons_1(
-              text: "Log in ",
+              text: "Login ",
               color: Colors.lightBlueAccent,
               onclick: () {
                 Navigator.pushNamed(context, LoginScreen.id);
               },
             ),
             Buttons_1(
-              text: "Register",
+              text: "Regiser",
               color: Colors.blueAccent,
               onclick: () {
                 Navigator.pushNamed(context, RegistrationScreen.id);

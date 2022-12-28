@@ -24,7 +24,7 @@ class Buttons_1 extends StatelessWidget {
           minWidth: 200.0,
           height: 42.0,
           child: Text(
-            'Log In',
+            text,
           ),
         ),
       ),
